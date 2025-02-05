@@ -34,8 +34,6 @@ const LoginPage = () => {
                     gender ="",
                 } = registrationData ? JSON.parse(registrationData) : {};
 
-                console.log("Registration Data:", { firstName, lastName, gender });
-
                 const userDoc = await getDoc(doc(firestore, "users", user.uid));
                 if(!userDoc.exists()){
                     await setDoc(doc(firestore, "users", user.uid), {
