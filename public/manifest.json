@@ -1,7 +1,7 @@
 
 {
     "name": "NextJs Auth",
-    "short_name": "NextJsAuth",
+    "short_name": "Auth",
     "description": "",
     "start_url": "/",
     "display": "standalone",
