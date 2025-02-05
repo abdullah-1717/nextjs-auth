@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next Auth",
+  title: "Nextjs Auth",
   description: "Create by Muhammad Abdullah",
 };
 
