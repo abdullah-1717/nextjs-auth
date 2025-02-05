@@ -13,7 +13,6 @@ const Dashboard = () => {
     const [userName, setUserName] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
-    console.log(user);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
