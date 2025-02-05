@@ -142,7 +142,7 @@ const PasswordChangePage = () => {
             color: "#000080",
             borderRadius:"8px"
         }}
-        placeholder="Password....."
+        placeholder="New Password....."
     />
 </div>
 <div>
@@ -167,7 +167,7 @@ const PasswordChangePage = () => {
                                 color: "#000080",
                                 borderRadius:"8px"
                             }}
-                            placeholder="Current Password...."
+                            placeholder="Confirm New Password...."
                         />
                     </div>
                 {error && <p style={{
