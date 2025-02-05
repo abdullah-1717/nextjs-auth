@@ -103,7 +103,7 @@ const LoginPage = () => {
                                     fontWeight: "bold",
                                     fontSize: "24px",
                                     color: "white",
-                                }}>Emal</label>
+                                }}>Email</label>
                             <TextField 
                                 type="email"
                                 variant="standard"
