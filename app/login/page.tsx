@@ -1,13 +1,14 @@
 "use client"
 import { useState } from "react";
 import { useRouter} from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import  {auth } from "../../firebase/firebase";
 import { doc, getDoc, setDoc} from "firebase/firestore";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import TextField  from "@mui/material/TextField";
 import { firestore } from "../../firebase/firebase";
+import GoogleIcon from "@mui/icons-material/Google";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -57,6 +58,18 @@ const LoginPage = () => {
                 }
             }   
         };
+
+
+        const signInWithGoogle = async () => {
+            const provider = new GoogleAuthProvider();
+            try{
+                await signInWithPopup(auth, provider);
+                router.push("/dashboard");
+            }
+            catch(error) {
+              console.error("Error signing in with Google: ", error)
+            }
+        }; 
         
         return (
             <div 
@@ -74,14 +87,13 @@ const LoginPage = () => {
             }}>
                 <h2
                 style={{
-                    fontSize: "35px",
+                    fontSize: "40px",
                     fontWeight: "bold",
                     color: "#000080",
                     marginBottom: "20px",
                     backgroundColor: "#F0fFFF",
                     padding: "8px",
                     borderRadius: "16px",
-                    border: "5px solid",
                     boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.9)',
                 }}>Login</h2>
                 <div style={{
@@ -157,17 +169,48 @@ const LoginPage = () => {
                         variant="contained"
                         
                         type="submit"
-                        style={{
+                        sx={{
                             width: "100%",
                             padding: "10px",
                             fontSize: "20px",
                             fontWeight: "bold",
                             color:"White",
                             borderRadius: "30px",
-                            backgroundColor: "	#0000CD",
+                            backgroundColor: "#1E90FF",
                             marginBottom: "10px",
+                            '&:hover': {
+                    backgroundColor: "#1663B0",  
+                },
                         }}>
                         Login
+                    </Button>
+                    <Button 
+                        variant="contained"
+                        onClick={signInWithGoogle}
+                        sx={{
+                            width: "100%",
+                            padding: "10px",
+                            fontSize: "20px",
+                            fontWeight: "bold",
+                            color:"White",
+                            borderRadius: "30px",
+                            backgroundColor: "#1E90FF",
+                            marginBottom: "10px",
+                            '&:hover': {
+                                backgroundColor: "#1663B0", 
+                            },
+                        }}>
+                        <div><GoogleIcon 
+                        style={{
+                            fontSize:"40px",
+                            backgroundColor:"white",
+                            paddingRight:"4px",
+                            paddingLeft:"4px",
+                            color:"red",
+                            marginRight:"10px",
+                            borderRadius:"8px",
+                        }}/></div>
+                        sign in with google
                     </Button>
                 </form>
                     <p 
@@ -176,7 +219,7 @@ const LoginPage = () => {
                         color: "white",
                         paddingBottom:"5px",
                     }}>
-                       Don&apos;t have an account? {""} 
+                       Don&apos;t have an account ? {""} 
                        <Link href="/register"
                        style={{
                         color: "lightgreen",

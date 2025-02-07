@@ -1,15 +1,15 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
-import { useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import  {auth } from "../../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { User } from "firebase/auth"
+import { User } from "firebase/auth";
 import Button from "@mui/material/Button";
 import { firestore } from "../../firebase/firebase";
 
 const Dashboard = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser ] = useState<User | null>(null);
     const [userName, setUserName] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -17,57 +17,53 @@ const Dashboard = () => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-             if(user){
-                setUser(user);
+            if (user) {
+                setUser (user);
                 const userDoc = await getDoc(doc(firestore, "users", user.uid));
-                if(userDoc.exists()){
+                if (userDoc.exists()) {
                     const userData = userDoc.data();
                     setUserName(`${userData.firstName} ${userData.lastName}`);
                 }
-             }
-             else{
+            } else {
                 router.push("/login");
-             }
-             setLoading(false);
+            }
+            setLoading(false);
         });
         return () => unsubscribe();
     }, [router]);
+
     const handleLogout = async () => {
-        try{
+        try {
             await signOut(auth);
             router.push("/login");
-        } catch (error){
+        } catch (error) {
             console.error("Logout Error", error);
         }
-    };
-
-    const handleChangePassword = () => {
-        router.push("/passwordChange");
     };
 
     if (loading) {
         return <p>Loading....</p>;
     }
 
-
-    return(
+    return (
         <div
-        style={{
-            background: 'linear-gradient(to right, #B259D2, #5981D2)',
-            height: "100vh",
-            width: "100vw",
-            display: "flex",
-            flexDirection: "column",
-        }}>
+            style={{
+                background: 'linear-gradient(to right, #B259D2, #5981D2)',
+                height: "100vh",
+                width: "100vw",
+                display: "flex",
+                flexDirection: "column",
+            }}>
             <nav style={{
                 backgroundColor: "#000080",
-                padding: "12px"
+                padding: "12px",
+                boxShadow: '0px 8px 10px rgba(0, 0, 0, 0.9)',
             }}>
                 <div style={{
-                    color:"white",
+                    color: "white",
                     fontSize: "24px",
                     fontWeight: "bold",
-                    }}>DASHBOARD</div>
+                }}>DASHBOARD</div>
             </nav>
             <main style={{
                 display: "flex",
@@ -76,31 +72,26 @@ const Dashboard = () => {
                 justifyContent: "center",
                 marginTop: "10px"
             }}>
-                {userName && (<h1 style={{fontSize:"24px", fontWeight:"bold", marginBottom: "6px", marginLeft: "10px"}}>Welcome, {userName}!</h1>)}
-                <div style={{marginLeft: "4px",
-                    marginRight: "4px"
-                }}>
-                    <Button style={{ 
+                {userName && (
+                    <h1 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "6px", marginLeft: "10px" }}>
+                        Welcome, {userName}!
+                    </h1>
+                )}
+                <div style={{ marginLeft: "4px", marginRight: "4px" }}>
+                    <Button sx={{
                         backgroundColor: "#EE2540",
                         color: "white",
-                        margin:"10px",
+                        margin: "15px",
                         fontSize: "24px",
                         fontWeight: "bold",
-                        borderRadius: "12px"
+                        borderRadius: "20px",
+                        boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.9)',
+                        '&:hover': {
+                            backgroundColor: "#BF1E33",
+                        }
                     }}
-                    onClick={handleLogout}>
-                    Logout
-                    </Button>
-                    <Button style={{
-                        backgroundColor: "#000080",
-                        color: "white",
-                        margin:"10px",
-                        fontSize: "24px",
-                        fontWeight: "bold",
-                        borderRadius: "12px"
-                    }}
-                    onClick={handleChangePassword}>
-                    Change Password
+                        onClick={handleLogout}>
+                        Logout
                     </Button>
                 </div>
             </main>

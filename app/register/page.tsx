@@ -6,8 +6,8 @@ import {
     createUserWithEmailAndPassword,
     sendEmailVerification,
 } from "firebase/auth";
-import { auth } from "../../firebase/firebase";    // one is this "@/firebase/firebase"
-// import { useRouter } from "next/router";
+import { auth } from "../../firebase/firebase";  
+
 import  Button  from "@mui/material/Button";
 
 const RegisterPage = () => {
@@ -81,7 +81,6 @@ const RegisterPage = () => {
                 backgroundColor: "#F0fFFF",
                 padding: "8px",
                 borderRadius: "16px",
-                border: "5px solid",
                 boxShadow: '4px 4px 10px rgba(0, 0, 0, 0.9)',
             }}>Dashboard</h2>
             <div style={{
@@ -286,14 +285,17 @@ const RegisterPage = () => {
                         variant="contained"
                         
                         type="submit"
-                        style={{
+                        sx={{
                             width: "100%",
                             padding: "10px",
                             fontSize: "20px",
                             fontWeight: "bold",
                             color:"White",
                             borderRadius: "30px",
-                            backgroundColor: "	#0000CD",
+                            backgroundColor: "#1E90FF",
+                            '&:hover': {
+                            backgroundColor:"#1663B0",
+                        }
                         }}>
                         Sign Up
                     </Button>
